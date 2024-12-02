@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Ratings from "./ratings";
+import Typewritter from "typewriter-effect";
 
 export default function Hero() {
   return (
@@ -20,7 +22,20 @@ export default function Hero() {
               </span>
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight lg:leading-tight">
                 Empowering Minds,{" "}
-                <span className="text-primary">Shaping Futures</span>
+                <span className="text-primary">
+                  <Typewritter
+                    options={{
+                      strings: [
+                        "Shaping Futures",
+                        "Inspiring Growth",
+                        "Nurturing Talent",
+                      ],
+                      autoStart: true,
+                      loop: true,
+                      delay: 50,
+                    }}
+                  />
+                </span>
               </h1>
               <p className="text-lg text-gray-600 max-w-lg">
                 Join our vibrant learning community where innovation meets
