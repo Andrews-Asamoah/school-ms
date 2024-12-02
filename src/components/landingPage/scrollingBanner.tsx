@@ -23,43 +23,33 @@ interface ScrollingBannerProps {
 export default function ScrollingBanner({ onClose }: ScrollingBannerProps) {
   const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
-  useEffect(() => {
-    const animateText = async () => {
-      if (containerRef.current && textRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const textWidth = textRef.current.offsetWidth;
+  const animateText = async () => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
 
-        await controls.start({
-          x: [-containerWidth, containerWidth],
-          transition: {
-            duration: 20,
-            ease: "linear",
-            repeat: Infinity,
-          },
-        });
-      }
-    };
+      await controls.start({
+        x: [-containerWidth, containerWidth],
+        transition: {
+          duration: 15,
+          ease: "linear",
+        },
+      });
 
-    animateText();
-
-    const interval = setInterval(() => {
+      // Immediately move to the next news item
       setCurrentNewsIndex((prevIndex) => (prevIndex + 1) % news.length);
-    }, 20000); // Change news every 20 seconds
+    }
+  };
 
-    return () => clearInterval(interval);
-  }, [controls, currentNewsIndex]);
+  useEffect(() => {
+    animateText();
+  }, [currentNewsIndex]);
 
   return (
-    <div className="bg-primary text-white px-4 flex items-center justify-between overflow-hidden">
+    <div className="bg-purple-600 text-white py-2 px-4 flex items-center justify-between overflow-hidden">
       <div ref={containerRef} className="flex-1 overflow-hidden">
-        <motion.div
-          ref={textRef}
-          animate={controls}
-          className="whitespace-nowrap"
-        >
+        <motion.div animate={controls} className="whitespace-nowrap">
           {news[currentNewsIndex].content}
         </motion.div>
       </div>
@@ -69,7 +59,7 @@ export default function ScrollingBanner({ onClose }: ScrollingBannerProps) {
         className="text-white hover:text-purple-200 ml-4"
         onClick={onClose}
       >
-        <X className="h-2 w-2" />
+        <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </Button>
     </div>
