@@ -1,15 +1,16 @@
 "use client";
-import Link from "next/link";
-import { Button } from "../../ui/button";
-import { useEffect, useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
-import { Menu } from "lucide-react";
-import { navigationItems } from "./navigationItems";
-import NavLink from "./nav";
-import { useRouter } from "next/navigation";
-import ScrollingBanner from "../scrollingBanner";
 
-const Header = () => {
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { navigationItems } from "./navigationItems";
+import ScrollingBanner from "../scrollingBanner";
+import NavLink from "./nav";
+
+export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(true);
@@ -17,11 +18,11 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [bannerVisible]);
 
   const handleNavigation = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -43,7 +44,7 @@ const Header = () => {
   return (
     <>
       <div
-        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-0 ${
+        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
           bannerVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -52,19 +53,19 @@ const Header = () => {
         )}
       </div>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        className={`sticky z-40 w-full transition-all duration-300 ${
           isScrolled
             ? "bg-white/80 backdrop-blur-md shadow-sm"
             : "bg-transparent"
-        }`}
+        } ${bannerVisible ? "top-10" : "top-0"}`}
       >
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link
               href="/"
-              className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+              className="text-2xl font-bold bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent"
             >
-              WIS
+              Wesley International
             </Link>
 
             {/* Desktop Navigation */}
@@ -74,23 +75,15 @@ const Header = () => {
                   key={item.title}
                   title={item.title}
                   href={item.href}
-                  onClick={handleNavigation}
+                  onClick={(e) => handleNavigation(e, item.href)}
                 />
               ))}
             </nav>
 
             {/* Desktop CTA Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <Link href="/admission">
-                <Button variant="outline" className="font-medium">
-                  Apply Now
-                </Button>
-              </Link>
-              <Link href="/signin">
-                <Button className="bg-primary text-white font-medium">
-                  Sign In
-                </Button>
-              </Link>
+              <NavLink title="Apply Now" href="/admission" variant="button" />
+              <NavLink title="Sign In" href="/signin" variant="button" />
             </div>
 
             {/* Mobile Menu */}
@@ -108,7 +101,7 @@ const Header = () => {
                       key={item.title}
                       title={item.title}
                       href={item.href}
-                      onClick={handleNavigation}
+                      onClick={(e) => handleNavigation(e, item.href)}
                       variant="mobile"
                     />
                   ))}
@@ -128,6 +121,4 @@ const Header = () => {
       </header>
     </>
   );
-};
-
-export default Header;
+}

@@ -47,19 +47,14 @@ export default function ScrollingBanner({ onClose }: ScrollingBannerProps) {
   }, [currentNewsIndex]);
 
   return (
-    <div className="bg-purple-600 text-white py-2 px-4 flex items-center justify-between overflow-hidden">
+    <div className="bg-primary text-white py-0 px-4 flex items-center justify-between overflow-hidden">
       <div ref={containerRef} className="flex-1 overflow-hidden">
         <motion.div animate={controls} className="whitespace-nowrap">
           {news[currentNewsIndex].content}
         </motion.div>
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="text-white hover:text-purple-200 ml-4"
-        onClick={onClose}
-      >
-        <X className="h-4 w-4" />
+      <Button variant="ghost" size="icon" className="ml-4" onClick={onClose}>
+        <X className="h-2 w-2" />
         <span className="sr-only">Close</span>
       </Button>
     </div>
