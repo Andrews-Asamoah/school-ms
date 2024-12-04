@@ -144,12 +144,12 @@ export default function Testimonials() {
                       </div>
                     </div>
                     <Card
-                      className="flex relative h-full flex-col"
+                      className="flex relative h-full"
                       ref={(el: HTMLDivElement | null) => {
                         if (el) cardsRef.current[idx] = el;
                       }}
                     >
-                      <CardContent className="pt-11 p-6 flex flex-col flex-grow">
+                      <CardContent className="pt-11 flex flex-col flex-grow">
                         <div className="flex justify-between items-end mb-4">
                           <div>
                             <h3 className="font-semibold text-lg">
