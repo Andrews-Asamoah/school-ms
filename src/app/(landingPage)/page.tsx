@@ -4,6 +4,7 @@ import Events from "@/components/landingPage/events";
 import Gallery from "@/components/landingPage/gallery";
 import Hero from "@/components/landingPage/hero";
 import Programs from "@/components/landingPage/programs";
+import Testimonials from "@/components/landingPage/testimonials";
 import Features from "@/components/landingPage/whyChooseUs";
 
 const page = () => {
@@ -13,7 +14,7 @@ const page = () => {
       <Features />
       <AboutUs />
       <Programs />
-      <Gallery />
+      <Testimonials />
       <Events />
       <Contact />
     </div>
